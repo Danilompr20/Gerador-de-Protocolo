@@ -64,13 +64,7 @@ namespace GeradorDeProtocolo.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("GrupoAssuntoId")
-                        .HasColumnType("int");
-
                     b.Property<bool?>("LocalAbertura")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("LocalArquivamento")
                         .HasColumnType("bit");
 
                     b.Property<string>("LocalDescricao")
@@ -80,8 +74,6 @@ namespace GeradorDeProtocolo.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("LocalId");
-
-                    b.HasIndex("GrupoAssuntoId");
 
                     b.ToTable("Locais");
                 });
@@ -166,19 +158,10 @@ namespace GeradorDeProtocolo.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("GeradorDeProtocolo.Models.Local", b =>
-                {
-                    b.HasOne("GeradorDeProtocolo.Models.GrupoAssunto", "GrupoAssunto")
-                        .WithMany()
-                        .HasForeignKey("GrupoAssuntoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("GeradorDeProtocolo.Models.Sublocal", b =>
                 {
                     b.HasOne("GeradorDeProtocolo.Models.Local", "Local")
-                        .WithMany()
+                        .WithMany("Sublocais")
                         .HasForeignKey("LocalId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

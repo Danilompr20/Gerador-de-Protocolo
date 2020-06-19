@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GeradorDeProtocolo.Migrations
 {
     [DbContext(typeof(ProtocoloContext))]
-    [Migration("20200618004847_usuario")]
-    partial class usuario
+    [Migration("20200619021915_primeira")]
+    partial class primeira
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -66,13 +66,7 @@ namespace GeradorDeProtocolo.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("GrupoAssuntoId")
-                        .HasColumnType("int");
-
                     b.Property<bool?>("LocalAbertura")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("LocalArquivamento")
                         .HasColumnType("bit");
 
                     b.Property<string>("LocalDescricao")
@@ -82,8 +76,6 @@ namespace GeradorDeProtocolo.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("LocalId");
-
-                    b.HasIndex("GrupoAssuntoId");
 
                     b.ToTable("Locais");
                 });
@@ -168,19 +160,10 @@ namespace GeradorDeProtocolo.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("GeradorDeProtocolo.Models.Local", b =>
-                {
-                    b.HasOne("GeradorDeProtocolo.Models.GrupoAssunto", "GrupoAssunto")
-                        .WithMany()
-                        .HasForeignKey("GrupoAssuntoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("GeradorDeProtocolo.Models.Sublocal", b =>
                 {
                     b.HasOne("GeradorDeProtocolo.Models.Local", "Local")
-                        .WithMany()
+                        .WithMany("Sublocais")
                         .HasForeignKey("LocalId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

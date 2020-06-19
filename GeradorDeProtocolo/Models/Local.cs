@@ -11,6 +11,6 @@ namespace GeradorDeProtocolo.Models
         public string LocalDescricao { get; set; }
         public int ? LocalDiasPermanencia { get; set; }
         public bool ? LocalAbertura { get; set; }
-        //public ICollection<Sublocal> Sublocais { get; set; }
+        public ICollection<Sublocal> Sublocais { get; set; }
     }
 }

@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GeradorDeProtocolo.Migrations
 {
-    public partial class first : Migration
+    public partial class primeira : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -21,6 +22,21 @@ namespace GeradorDeProtocolo.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Locais",
+                columns: table => new
+                {
+                    LocalId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LocalDescricao = table.Column<string>(nullable: true),
+                    LocalDiasPermanencia = table.Column<int>(nullable: true),
+                    LocalAbertura = table.Column<bool>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Locais", x => x.LocalId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OrigemDeAberturas",
                 columns: table => new
                 {
@@ -31,6 +47,25 @@ namespace GeradorDeProtocolo.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OrigemDeAberturas", x => x.OrigemDeAberturaId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "usuarios",
+                columns: table => new
+                {
+                    UsuarioId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(nullable: true),
+                    CPF = table.Column<string>(nullable: true),
+                    Sexo = table.Column<string>(nullable: true),
+                    Telefone = table.Column<string>(nullable: true),
+                    Nascimento = table.Column<DateTime>(nullable: false),
+                    Email = table.Column<string>(nullable: true),
+                    Senha = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_usuarios", x => x.UsuarioId);
                 });
 
             migrationBuilder.CreateTable(
@@ -47,29 +82,6 @@ namespace GeradorDeProtocolo.Migrations
                     table.PrimaryKey("PK_Assuntos", x => x.AssuntoId);
                     table.ForeignKey(
                         name: "FK_Assuntos_GrupoAssuntos_GrupoAssuntoId",
-                        column: x => x.GrupoAssuntoId,
-                        principalTable: "GrupoAssuntos",
-                        principalColumn: "GrupoAssuntoId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Locais",
-                columns: table => new
-                {
-                    LocalId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    LocalDescricao = table.Column<string>(nullable: true),
-                    LocalDiasPermanencia = table.Column<int>(nullable: true),
-                    LocalAbertura = table.Column<bool>(nullable: true),
-                    LocalArquivamento = table.Column<bool>(nullable: true),
-                    GrupoAssuntoId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Locais", x => x.LocalId);
-                    table.ForeignKey(
-                        name: "FK_Locais_GrupoAssuntos_GrupoAssuntoId",
                         column: x => x.GrupoAssuntoId,
                         principalTable: "GrupoAssuntos",
                         principalColumn: "GrupoAssuntoId",
@@ -103,11 +115,6 @@ namespace GeradorDeProtocolo.Migrations
                 column: "GrupoAssuntoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Locais_GrupoAssuntoId",
-                table: "Locais",
-                column: "GrupoAssuntoId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_sublocais_LocalId",
                 table: "sublocais",
                 column: "LocalId");
@@ -125,10 +132,13 @@ namespace GeradorDeProtocolo.Migrations
                 name: "sublocais");
 
             migrationBuilder.DropTable(
-                name: "Locais");
+                name: "usuarios");
 
             migrationBuilder.DropTable(
                 name: "GrupoAssuntos");
+
+            migrationBuilder.DropTable(
+                name: "Locais");
         }
     }
 }

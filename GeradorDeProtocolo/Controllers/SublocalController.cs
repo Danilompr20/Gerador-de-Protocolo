@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using GeradorDeProtocolo.Models;
 using GeradorDeProtocolo.Interface;
-using AspNetCore;
+
 
 namespace GeradorDeProtocolo.Controllers
 {
