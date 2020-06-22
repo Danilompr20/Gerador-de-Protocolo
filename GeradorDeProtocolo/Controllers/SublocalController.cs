@@ -5,25 +5,28 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using GeradorDeProtocolo.Models;
 using GeradorDeProtocolo.Interface;
-
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GeradorDeProtocolo.Controllers
 {
     public class SublocalController : Controller
     {
         private readonly ISublocalRepository _sublocalRepository;
-        public SublocalController(ISublocalRepository sublocalRepository)
+        private readonly ILocalRepository _localRepository;
+        public SublocalController(ISublocalRepository sublocalRepository, ILocalRepository localRepository)
         {
             _sublocalRepository = sublocalRepository;
+            _localRepository = localRepository;
         }
         public IActionResult Index()
         {
-            var sublocal = _sublocalRepository.ListarTodos();
+            var sublocal = _sublocalRepository.ListarSubLocalComLocal();
             return View(sublocal);
         }
 
         public IActionResult Create()
         {
+            ViewData["local"] = new SelectList(_localRepository.ListarTodos(),"LocalId", "LocalDescricao");
             return View();
         }
 

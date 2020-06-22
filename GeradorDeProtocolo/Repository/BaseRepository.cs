@@ -18,16 +18,19 @@ namespace GeradorDeProtocolo.Repository
         public void Atualizar(T Entity)
         {
             _context.Set<T>().Update(Entity);
+            _context.SaveChanges();
         }
 
         public void Cadastrar(T Entity)
         {
             _context.Set<T>().Add(Entity);
+            _context.SaveChanges();
         }
 
         public void Excluir(T Entity)
         {
             _context.Set<T>().Remove(Entity);
+            _context.SaveChanges();
         }
 
         public IEnumerable<T> ListarTodos()

@@ -1,0 +1,47 @@
+﻿@model IEnumerable<GeradorDeProtocolo.Models.Sublocal>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SublocalDescricao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SublocalDiasPermanecia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Local)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SublocalDescricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SublocalDiasPermanecia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Local.LocalDescricao)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.SublocalId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.SublocalId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.SublocalId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

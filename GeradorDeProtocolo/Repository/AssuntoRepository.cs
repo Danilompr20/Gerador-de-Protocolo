@@ -25,7 +25,7 @@ namespace GeradorDeProtocolo.Repository
       
         public  IEnumerable<Assunto> BuscarAssuntoComGrupo()
         {
-            return _context.Assuntos.Include(g => g.GrupoAssuntoId).ToList();
+            return _context.Assuntos.Include(g => g.GrupoAssunto).ToList();
         }
     }
 }

@@ -23,7 +23,7 @@ namespace GeradorDeProtocolo.Repository
 
         public IEnumerable<Sublocal> ListarSubLocalComLocal()
         {
-            return _context.sublocais.Include(l => l.LocalId).ToList();
+            return _context.sublocais.Include(l => l.Local).ToList();
         }
     }
 }

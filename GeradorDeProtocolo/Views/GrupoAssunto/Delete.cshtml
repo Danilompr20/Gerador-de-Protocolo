@@ -1,0 +1,35 @@
+﻿@model GeradorDeProtocolo.Models.GrupoAssunto
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Deseja realmente excluir?</h3>
+
+<div>
+    <h4>Grupo de Assunto</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ativo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Ativo)
+        </dd>
+
+    </dl>
+    <form asp-action="Delete" asp-controller="GrupoAssunto">
+        <input type="hidden" asp-for="GrupoAssuntoId" />
+        <input type="submit" value="Excluir" class="btn btn-danger" />
+        <a asp-action="Index">Voltar</a>
+
+    </form>
+</div>

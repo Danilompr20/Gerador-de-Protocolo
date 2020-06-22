@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using GeradorDeProtocolo.Models;
 using GeradorDeProtocolo.Interface;
+using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 
 namespace GeradorDeProtocolo.Controllers
 {
@@ -19,7 +20,7 @@ namespace GeradorDeProtocolo.Controllers
         public IActionResult Index()
         {
           var grupo = _grupoAssuntoRepository.ListarTodos();
-            return View();
+            return View(grupo);
         }
        
     public IActionResult Create()
@@ -30,39 +31,105 @@ namespace GeradorDeProtocolo.Controllers
         [HttpPost]
         public IActionResult Create([FromForm]GrupoAssunto grupoAssunto)
         {
-            return View();
+            if (!ModelState.IsValid)
+            {
+               
+                return View();
+            }
+            _grupoAssuntoRepository.Cadastrar(grupoAssunto);
+             return  RedirectToAction(nameof(Index));
+
         }
 
         [HttpGet]
         public IActionResult Edit(int? id)
         {
-            return View();
+            
+          
+                if (id==null)
+                {
+                  throw new NotImplementedException();
+                }
+             GrupoAssunto grupo= _grupoAssuntoRepository.BuscarPorId(id.Value);
+            return View(grupo);
+           
+            
         }
 
         [HttpPost]
         public IActionResult Edit(int id, GrupoAssunto grupoAssunto)
         {
-            return View();
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+          
+            try
+            {
+                
+               _grupoAssuntoRepository.Atualizar(grupoAssunto);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception e)
+            {
+
+                throw new NotImplementedException(e.ToString());
+            }
+           
+          
         }
 
+        
+        
         [HttpGet]
         public IActionResult Delete(int? id)
         {
-            return View();
+
+
+            if (id == null)
+            {
+                throw new NotImplementedException();
+            }
+            GrupoAssunto grupo= _grupoAssuntoRepository.BuscarPorId(id.Value);
+            return View(grupo);
+
+           
 
         }
 
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            return View();
+            try
+            {
+
+               GrupoAssunto grupo = _grupoAssuntoRepository.BuscarPorId(id);
+                if (grupo==null)
+                {
+                    return NotFound();
+                }
+               _grupoAssuntoRepository.Excluir(grupo);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception e)
+            {
+
+                throw new NotImplementedException(e.ToString());
+            }
+           
 
         }
 
         [HttpGet]
-        public IActionResult Details(int id )
+        public IActionResult Details(int ? id )
         {
-            return View();
+
+            if (id == null)
+            {
+                throw new NotImplementedException();
+            }
+            GrupoAssunto assunto = _grupoAssuntoRepository.BuscarPorId(id.Value);
+            return View(assunto);
         }
       
     }

@@ -5,15 +5,18 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using GeradorDeProtocolo.Models;
 using GeradorDeProtocolo.Interface;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GeradorDeProtocolo.Controllers
 {
     public class AssuntoController : Controller
     {
         private readonly IAssuntoRepository _assuntoRepository;
-        public AssuntoController(IAssuntoRepository assuntoRepository)
+        private readonly IGrupoAssuntoRepository _grupoassuntoRepository;
+        public AssuntoController(IAssuntoRepository assuntoRepository, IGrupoAssuntoRepository grupoAssuntoRepository)
         {
             _assuntoRepository = assuntoRepository;
+            _grupoassuntoRepository = grupoAssuntoRepository;
         }
         public IActionResult Index()
         {
@@ -24,6 +27,7 @@ namespace GeradorDeProtocolo.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            ViewData["Grupo"] = new SelectList(_grupoassuntoRepository.ListarTodos(),"GrupoAssuntoId","Descricao") ;
             return View();
         }
 
